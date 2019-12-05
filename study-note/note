@@ -4,6 +4,47 @@
 
   컴포넌트 구조화
    앱은 컴포넌트들의 모음이다.
-    파일 1개당 한개의 컴포넌트!
+    앱 구조
+    - index.js
+        - search_bar.js
+        - video_detail.js
+        - video_item.js
+        - video_list.js
+
+    규칙!
+       - 파일 1개당 한개의 컴포넌트!
+
+    컴포넌트
+       - 함수 기반 컴포넌트: simple just return jsx and without state
+       - 클래스 기반 컴포넌트: return jsx and other do!  (추가 기능)
+         ex) event handle, 컴포넌트 상호작용, 상태
+
+
+    클래스 컴포넌트 이벤트 핸들링
+      - 인라인 방식
+        <input onChange={(e) => e.target.value} />
+      - 핸들러 방식
+        <input onChange={this.onInputChange} />
+        => 메서드 이름 짓기 : [on OR handle] + [element 명] + [event type]
+
+     상태(state)
+        state is plain js Object
+        each class component has a individual state object
+        상태 객체는 클래스의 생성자에서 초기화 함
+        state 객체의 값이 변경하면 render() 메서드가 호출되여 리렌더링 된다. => DOM 에 푸시한다.
+        state 객체는 setState() 메서드로 변경해야 한다.
+
+        <state 와 컴포넌트의 협업 방식>
+            <input
+                value={this.state.term}
+                onChange={(event) => this.setState({term: event.target.value})} />
+
+              이벤트가 발생하고 입력값이 인풋이 아니라 스테이트로 보내 저장시킨다.
+              인풋의 값을 보여줄때 value 도 인풋의 자체 값이 아니라 스테이트의 term 값을 보여준다.
+
+    컴포넌트 렌더링 방식
+        부모 컴포넌트 리렌더링 => 그 부모의 자식 컴포넌트도 리렌더링 => 자식의 자식 컴포넌트도 리랜더링...
+
+
 
 

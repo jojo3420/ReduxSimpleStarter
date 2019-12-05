@@ -1,15 +1,23 @@
 import React from 'react'; // core lib
 import ReactDOM from 'react-dom';
+import SearchBar from './components/search_bar';
 
 
+// @TODO: hide value
+const API_KEY = 'AIzaSyDZMt0_mIz72EcUmCH5dc116mp9qRty7MI';
 
 //    1. Create a new component. this component should produce some html
 const App = () => {
-  return <div>Hello!</div>; // return JSX
+  // return <div>Hello!</div>; // return JSX
   // 웹팩+바벨 같은 보일러플레이트 패키지의 목적은 JSX 코드를 바닐라 자바스크립트 코드로 변환해준다.
   // 이 바닐라 자바스크립트 코드는 궁극적으로 HTML 코드로 변환된다.
   // https://babeljs.io/repl 확인
   // <div>hello world</div> ==> React.createElement("div", null, "hello world");
+  return (
+    <div>
+      <SearchBar/>
+    </div>
+  )
 };
 
 

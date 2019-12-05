@@ -10,11 +10,9 @@ import React, { Component } from 'react'; // JSX 변환을 위해 import 필요.
 // Class Base Component : just js plain class
 // extend React.Component
 class SearchBar extends Component {
-
   // state 초기화
   constructor(props) {
     super(props);
-
     this.state = {term: ''};
   }
 
@@ -22,23 +20,28 @@ class SearchBar extends Component {
   // state 가 변경되면 render() 함수가 호출되고 리렌더링 된다.
   render() {
     return (
-      <div>
+      <div className="search-bar">
         <input
           value={this.state.term}
-          onChange={(event) => this.setState({term: event.target.value})}  />
+          // onChange={(event) => this.setState({term: event.target.value})}  />
+          onChange={event => this.onInputChange(event.target.value)}  />
       </div>
     );
 
-    // return <input  onChange={this.onInputChange}  />; // return jsx
   }
 
   // on OR handle + [element] + [event type]
-  // onInputChange(event) {
-  //   const { value } = event.target;
-  //   console.log(value);
-  //   // DO NOT THIS (BAD) : this.state.terms = value;
-  //   this.setState({term: value});
-  // }
+  onInputChange(term) {
+    // DO NOT THIS (BAD) : this.state.terms = value;
+    this.setState({term});
+
+    // 상위 컴포넌트에서 전달 받은 함수 사용.
+    this.props.onSearchVideo(term);
+
+    // 내가 생각한 방식 : 상위 컴포넌트의 스테이트를 변경하여 조회 되도록 하는 방식(비효율)
+    // this.props.onChangeTerm(term);
+
+  }
 }
 
 // 2. export component

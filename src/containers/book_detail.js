@@ -5,9 +5,14 @@ import { connect } from 'react-redux';
 class BookDetail extends Component {
 
   render() {
+    const { activeBook } =  this.props;
+    if (!activeBook) return <div>Let's select a book</div>
+
     return (
       <div>
-        <p>book title</p>
+        <h3>Select Book</h3>
+        <div>Title: {activeBook.title}</div>
+        <div>Pages: {activeBook.pages}</div>
       </div>
     )
   }
@@ -15,8 +20,8 @@ class BookDetail extends Component {
 
 function toStateToProps(state) {
   return {
-    // selectedBook: state.ac
+    activeBook: state.activeBook
   }
 }
 
-export default BookDetail;
+export default connect(toStateToProps)(BookDetail);

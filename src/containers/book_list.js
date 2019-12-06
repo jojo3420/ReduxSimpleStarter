@@ -13,14 +13,17 @@ class BookList extends Component {
 
     const bookItems = books.map((book) => {
       return (
-        <li key={book.title} onClick={() => this.props.onSelectBook(book)}>
+        <li key={book.title}
+            onClick={() => this.props.onSelectBook(book)}
+            className='list-group-item'
+        >
           <p>title: {book.title}, pages: {book.pages}</p>
         </li>
       );
     });
 
     return (
-      <ul>
+      <ul className='list-group col-sm-4'>
         {bookItems}
       </ul>
     );

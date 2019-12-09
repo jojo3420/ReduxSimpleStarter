@@ -2,10 +2,11 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import App from './components/app';
+import PostsList from './containers/posts_list';
+import RegisterPost from './containers/register_post';
 
-const Hi = () => <div>hi</div>;
-const Hello = () => <div>hello</div>;
-const Greeting = () => <div>greeting</div>;
+
+const SampleRoute = () => <div>SampleRoute</div>;
 
 
 /* 라우터 구성
@@ -16,9 +17,9 @@ const Greeting = () => <div>greeting</div>;
 
 export default (
   <Route path="/" component={App}>
-    <Route path="hi" component={Hi} />
-    <Route path="hello" component={Hello} />
-    <Route path="greeting" component={Greeting} />
+    <IndexRoute component={PostsList} />
+    <Route path="sample" component={SampleRoute} />
+    <Route path='/posts/new' component={RegisterPost} />
   </Route>
 
 );

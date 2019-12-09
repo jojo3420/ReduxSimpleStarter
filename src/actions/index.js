@@ -11,9 +11,7 @@ export function fetchWeather(city) {
   // q city name and country code divided by comma, use ISO 3166 country codes
   const countryCode = 'us';
   // const countryCode = iso.whereCountry(city);
-  debugger
   const url = `${ROOT_URL}&q=${city},${countryCode}`;
-
 
   let promise  = axios.get(url);
   // console.log('promise:', promise);

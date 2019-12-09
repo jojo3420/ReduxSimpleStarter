@@ -205,7 +205,7 @@
     backend api doc: http://reduxblog.herokuapp.com/
 
   *리액트 라우터
-    리액트 라우터 설치:  npm install --save react-router@2.0.0-rc5
+    리액트 라우터 설치:  npm install --save react-router@3.2.0
     추가 보너스 패키지 History: 자바스크립트 패키지 => URL이 변경되는 것을 "관찰" 하다가 리액트 라우터에게 "전달"
     개발자가 History 를 직접 다룰 일은 없음
 

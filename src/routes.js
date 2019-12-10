@@ -3,7 +3,8 @@ import { Route, IndexRoute } from 'react-router';
 
 import App from './components/app';
 import PostsList from './containers/posts_list';
-import RegisterPost from './containers/register_post';
+import RegisterPosts from './containers/register_posts';
+import DetailPosts from './containers/detail_posts';
 
 
 const SampleRoute = () => <div>SampleRoute</div>;
@@ -19,7 +20,8 @@ export default (
   <Route path="/" component={App}>
     <IndexRoute component={PostsList} />
     <Route path="sample" component={SampleRoute} />
-    <Route path='/posts/new' component={RegisterPost} />
+    <Route path="/posts/new" component={RegisterPosts} />
+    <Route path="/posts/:id" component={DetailPosts} />
   </Route>
 
 );

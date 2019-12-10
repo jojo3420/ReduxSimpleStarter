@@ -1,15 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchDetailPosts } from '../actions/index';
-
+import { fetchDetailPosts, deletePosts } from '../actions/index';
+import { Link } from 'react-router';
+import PropTypes from 'prop-types'
 
 
 class DetailPosts extends Component {
 
+  static contextTypes = {
+    router: PropTypes.object
+  };
+
   componentDidMount(){
     this.props.fetchPosts(this.props.params.id);
   }
+
+
+    onDeletePosts() {
+      this.props.deletePosts(this.props.params.id)
+        .then(() => {
+          this.context.router.push("/");
+        });
+
+    }
 
   render() {
     const { posts } = this.props;
@@ -17,9 +31,13 @@ class DetailPosts extends Component {
 
     return (
       <div>
+        <Link to="/" className='btn btn-default'>back</Link>
         <h4>Title: {posts.title}</h4>
         <h6>Categories: {posts.categories}</h6>
         <p>Content: {posts.content}</p>
+        <button
+          onClick={this.onDeletePosts.bind(this)}
+          className='btn btn-danger'>Delete</button>
       </div>
     )
   }
@@ -32,13 +50,17 @@ function mapStateToProps(state) {
   }
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return bindActionCreators({
-//     fetchPosts: fetchDetailPosts,
-//   }, dispatch);
-// }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    fetchPosts: fetchDetailPosts,
+    deletePosts: deletePosts,
+  }, dispatch);
+}
 
-// export default connect(mapStateToProps, mapDispatchToProps)(DetailPosts);
+export default connect(mapStateToProps, mapDispatchToProps)(DetailPosts);
 
 //ES6 ShortCut
-export default connect(mapStateToProps, {fetchPosts: fetchDetailPosts})(DetailPosts);
+// export default connect(mapStateToProps, {
+//   fetchPosts: fetchDetailPosts,
+//   deletePosts: deletePosts,
+// })(DetailPosts);

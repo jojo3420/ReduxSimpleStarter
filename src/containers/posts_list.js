@@ -13,12 +13,10 @@ class PostsList extends Component {
   //   this.props.fetchPosts();
   // }
 
-
   componentDidMount() {
-    console.log('componentDidMount');
+    // console.log('componentDidMount');
     this.props.fetchPosts();
   }
-
 
   renderPosts() {
     const { postsList } = this.props;
@@ -26,10 +24,11 @@ class PostsList extends Component {
 
     return postsList.map((post) => {
       return (
-        <Link to={`/posts/${post.id}`}>
-          <li key={post.id} className='list-group-item'>
+        <Link to={`/posts/${post.id}`} key={post.id}>
+          <li className='list-group-item'>
             <span className='pull-xs-right'>{post.categories}</span>
             <strong>{post.title}</strong>
+            {/*<p>{post.id}</p>*/}
           </li>
         </Link>
       );

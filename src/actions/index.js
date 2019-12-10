@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_POSTS, FETCH_DETAIL_POST, DELETE_POST, ADD_NEW_POST } from '../helpers/constant';
+import { FETCH_POSTS, FETCH_DETAIL_POSTS, DELETE_POSTS, ADD_NEW_POSTS } from '../helpers/constant';
 
 import { ROOT_API_URL } from '../helpers/constant';
 import { API_KEY } from '../helpers/constant';
@@ -26,7 +26,7 @@ export function createNewPost(props, callback) {
       .then(()=> callback());
 
   return {
-    type: ADD_NEW_POST,
+    type: ADD_NEW_POSTS,
     payload: response,
   }
 }
@@ -38,7 +38,19 @@ export function fetchDetailPosts(id) {
   const response = axios(url);
 
   return {
-    type: FETCH_DETAIL_POST,
+    type: FETCH_DETAIL_POSTS,
+    payload: response,
+  }
+}
+
+export function deletePosts(id) {
+  if (!id) throw new Error('deletePosts() => id is null or undefined.');
+
+  const url = `${ROOT_API_URL}/posts/${id}?key=${API_KEY}`;
+  const response = axios.delete(url);
+
+  return {
+    type: DELETE_POSTS,
     payload: response,
   }
 }

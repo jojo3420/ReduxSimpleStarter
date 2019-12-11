@@ -32,7 +32,7 @@ export function fetchPostsById(id) {
 }
 
 export function registrationPosts(props) {
-
+  console.log(props);
   const url = `${ROOT_URL}/posts?key=${API_KEY}`;
   const response = axios.post(url, props);
 

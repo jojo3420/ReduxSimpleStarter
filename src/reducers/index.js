@@ -1,12 +1,9 @@
 import { combineReducers } from 'redux';
-import fetchPostsReducer  from './reducer_fetch_posts';
+import { usersReducer }  from './reducer_users'
 
-// redux-from reducer 추가
-import { reducer as formReducer } from 'redux-form';
 
 const rootReducer = combineReducers({
-  posts: fetchPostsReducer,
-  form: formReducer, // redux-form
+  users: usersReducer
 });
 
 export default rootReducer;

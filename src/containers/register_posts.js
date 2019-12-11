@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
@@ -7,6 +8,23 @@ import { reduxForm, Field } from 'redux-form';
 import { connect } from "react-redux";
 
 import { createNewPost } from '../actions/index'
+import { InputFormField, TextareaFormField } from "../components/form_field";
+
+
+const FIELDS = {
+  title: {
+    type: 'input',
+    label: "Enter title For Post",
+  },
+  categories: {
+    type: 'input',
+    label: 'Type a categories',
+  },
+  content: {
+    type: 'textarea',
+    label: 'input content',
+  }
+};
 
 
 class RegisterPost extends Component {
@@ -16,24 +34,6 @@ class RegisterPost extends Component {
   static contextTypes = {
     router: PropTypes.object
   };
-
-
-  renderInputField(field) {
-    // debugger
-    // user가 엘리먼트에 touched 했을 경우 touched 프로퍼티 true 로 변경됨!
-    const { meta: { touched, error } } = field;
-    const className = `form-group ${touched && error ? "has-danger" : ""}`;
-
-    return (
-      <div className={className}>
-        <label>{field.label}</label>
-        <input className="form-control" type="text" {...field.input} />
-        <div className="text-help">
-          {touched ? error : ""}
-        </div>
-      </div>
-    );
-  }
 
   renderTextAreaField(field) {
     // debugger
@@ -62,8 +62,6 @@ class RegisterPost extends Component {
       // we navigate by calling this.context.router.push with the
       // new path to navigate to.
       this.context.router.push("/");
-
-
     });
 
   }
@@ -73,44 +71,26 @@ class RegisterPost extends Component {
     const { handleSubmit } = this.props;
 
     return (
-      /* 유저가 리덕스-폼 에게 제출을 시도 : redux-form validate this fields
-      <div>
-        <form onSubmit={handleSubmit}>
-          <h3>Create A New Post</h3>
-          <div className="form-group">
-            <label>Title</label>
-            <input type="text" className="form-control" {...title} />
-          </div>
-          <div className="form-group">
-            <label>Categories</label>
-            <input type="text" className="form-control" />
-          </div>
-          <div className="form-group">
-            <label>Content</label>
-            <textarea className="form-control" />
-          </div>
-
-          <button type="submit" className="btn btn-primary">Submit</button>
-        </form>
-      </div>
-      */
+      /* 유저가 리덕스-폼 에게 제출을 시도 : redux-form validate this fields */
       <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
         <Field
           label="Title For Post"
           name="title"
-          component={this.renderInputField}
+          type="input"
+          component={InputFormField.bind(this)}
         />
 
         <Field
           label="Categories"
           name="categories"
-          component={this.renderInputField}
+          component={InputFormField}
         />
 
         <Field
           label="Post Content"
           name="content"
-          component={this.renderTextAreaField}
+          type="textarea"
+          component={TextareaFormField}
         />
         <button type="submit" className="btn btn-primary">Submit</button>
         <Link to='/' className='btn btn-danger'>Cancel</Link>
@@ -126,15 +106,22 @@ function validate(values) {
   const errors = {};
 
   // Validate the inputs from 'values'
-  if (!values.title) {
-    errors.title = "Enter a title";
-  }
-  if (!values.categories) {
-    errors.categories = "Enter some categories";
-  }
-  if (!values.content) {
-    errors.content = "Enter some content please";
-  }
+  // if (!values.title) {
+  //   errors.title = "Enter a title";
+  // }
+  // if (!values.categories) {
+  //   errors.categories = "Enter some categories";
+  // }
+  // if (!values.content) {
+  //   errors.content = "Enter some content please";
+  // }
+
+  _.forEach(FIELDS, (obj, field, list) => {
+    if (!values[field]) {
+      errors[field] = obj.label;
+    }
+  });
+
 
   // If errors is empty, the form is fine to submit
   // If errors has *any* properties, redux form assumes form is invalid

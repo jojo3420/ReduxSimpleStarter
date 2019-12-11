@@ -13,7 +13,7 @@ export default (
     <IndexRoute component={IndexPosts} />
     <Route path="/posts/:id" component={DetailPosts} />
     <Route path="/new/posts" component={RegistrationPosts} />
-    {/*<Route path="/test" component={Test} />*/}
+    <Route path="/test" component={Test} />
   </Route>
 );
 

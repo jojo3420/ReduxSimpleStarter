@@ -13,14 +13,16 @@ import { registrationPosts } from '../actions/index';
 
 class RegistrationPosts extends Component {
 
-  // static context = {
-  //   router: PropTypes.object
-  // };
-
+  static contextTypes = {
+    router: PropTypes.object
+  };
 
   onSubmitPosts(values) {
     // console.log(values);
-    this.props.register(values);
+    this.props.register(values)
+      .then(() => {
+        this.context.router.push("/");
+      })
   }
 
 

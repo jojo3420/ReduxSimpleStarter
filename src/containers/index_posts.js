@@ -6,8 +6,6 @@ import { bindActionCreators } from "redux";
 import { fetchPostsIndex } from "../actions/index";
 
 
-
-
 class IndexPosts extends Component {
   componentDidMount() {
     // console.log('componentDidMount');
@@ -17,16 +15,14 @@ class IndexPosts extends Component {
   renderPosts() {
     const { postsList } = this.props;
     const posts = _.map(postsList, posts => {
-      {/*<Link to={`/posts/${posts.id}`} key={posts.id}> </Link>*/}
       return (
-        <tr>
-            <td>{posts.title}</td>
-            <td>{posts.categories}</td>
-            <td>{posts.content}</td>
-        </tr>
+        <li className="list-group-item" key={posts.id}>
+          <Link to={`/posts/${posts.id}`}>
+            {posts.title}
+          </Link>
+        </li>
       )
     });
-    console.log(posts);
     return posts;
   }
 
@@ -36,18 +32,9 @@ class IndexPosts extends Component {
       <div>
         <h3>Index</h3>
         <Link to='/new/posts' className='btn btn-primary'>New Blog</Link>
-        <table className='table'>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Categories</th>
-              <th>Content</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.renderPosts()}
-          </tbody>
-        </table>
+        <ul className="list-group">
+          {this.renderPosts()}
+        </ul>
       </div>
     );
   }

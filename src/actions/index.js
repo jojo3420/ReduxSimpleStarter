@@ -32,12 +32,22 @@ export function fetchPostsById(id) {
 }
 
 export function registrationPosts(props) {
-  console.log(props);
+  // console.log('registrationPosts() props:', props);
   const url = `${ROOT_URL}/posts?key=${API_KEY}`;
   const response = axios.post(url, props);
 
   return {
     type: REGISTRATION_POSTS,
+    payload: response,
+  }
+}
+
+export function deletePostsBy(id) {
+  const url = `${ROOT_URL}/posts/${id}?pey=${API_KEY}`;
+  const response = axios.delete(url);
+
+  return {
+    type: DELETE_POSTS,
     payload: response,
   }
 }

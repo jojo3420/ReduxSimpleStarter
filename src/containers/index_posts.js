@@ -42,7 +42,7 @@ class IndexPosts extends Component {
 
 function mapStateToProps(state) {
   return {
-    postsList: state.posts.postsList,
+    postsList: state.postsData.postsList,
   }
 }
 

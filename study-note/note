@@ -200,3 +200,130 @@
    npm i --save react-sparklines@1.6.0
 
 
+챕터 5 리액트 라우터 및 리덕스 폼
+    블로그 앱 제작하기
+    backend api doc: http://reduxblog.herokuapp.com/
+
+  *리액트 라우터
+    리액트 라우터 설치:  npm install --save react-router@3.2.0 (bugfix version)
+    추가 보너스 패키지 History: 자바스크립트 패키지 => URL이 변경되는 것을 "관찰" 하다가 리액트 라우터에게 "전달"
+    개발자가 History 를 직접 다룰 일은 없음
+
+    <라우터 객체 설정: src/index.js>
+        import { Router, browserHistory, hashHistory } from "react-router";
+        import routes from './routes';
+
+        <Provider store={...}>
+           <Router history={browserHistory} routes={routes} />
+        </Provider>
+         => Router 객체를 생성하고 history, routes 프로퍼티를 전달한다.
+
+
+    *History 객체의 역활 및 종류
+        history 객체로 브라우저의 URL 을 읽어 들인다.
+        ex) http://sample.com/index?#a
+        browserHistory 객체가 "http://sample.com/index" 부분까지 읽어 들임
+        hashHistory 객체가 # 이 후 부분을 읽어 들임
+
+
+    <라우트 path 구성> routes.js
+
+    중첩된 라우트도 구성이 가능
+    라우트 간에 중첩이 되면 컴포넌트 간에 관계가 형성 된다. (상위 컴포넌트, 하위 컴포넌트)
+    상위컴포넌트 에서 하위 컴포넌트를 포함 해야한다.
+    상위컴포넌트 render() JSX 부분에서 하위 컴포넌트 불러옴 : {this.props.children}
+
+
+
+  *리덕스 폼
+    팩키지 설치 : "redux-form": "^6.6.3" (bugfix)
+
+    리덕스 폼 컨셉:
+     - <form>을 개발자가 아니라 리덕스-폼에게 위임하여 다루게 한다.
+     이렇게 하지 않으면 각 input 등의 이벤트와 핸들러를 개별적으로 핸들링 해줘야 함....
+     <input value={this.state.term} onChange={(e)=> this.setState({term: e.target.value}) />
+
+    특징
+     - 리덕스-폼 구성 오브젝트를 이용하여 폼 필드들을 전체적으로 관리 한다.
+     - 폼 제출 이벤트 핸들링 및 필드 validation 체크
+     - 폼의 데이터를 컴포넌트 스테이트 레벨에서 => 어플리케이션 스테이트 레벨로 끌어올림
+
+
+    Redux-form setting.
+      리액트 컴포넌트와 redux-form 을 연결한다.
+      과거에는 폼 입력값이 컴포넌트 레벨 스테이트 이였다.
+      지금은 어플리케이션 레벨의 스테이트가 된다. => 리덕스 스토어
+
+      #code
+      import { reduxForm, Field } from 'redux-form';
+
+      // User types something in... redux-form record it on application state
+      export default reduxForm({
+         validate,
+         fields: ['title', 'categories', 'content'],
+         form: 'PostNewForm',
+      })(RegisterPost);
+
+      위 의 코드는 아래와 같다.
+      state === {
+        formReducer: {
+          PostNewForm: {
+            title: '...',
+            categories: '...',
+            content: '...',
+          }
+        }
+      }
+
+    connect api: 1st argument is mapStateToProps(), 2nd is mapDispatchToProps(),
+    reduxForm api: 1st is form config, 2nd is mapStateToProps(), 3rd is mapDispatchToProps()
+    리덕스 버전이 올라가므로서 connect() 함수로 변경됨.
+    => reduxForm({...})(conect(null, { actionCreator })(RegisterPost));
+
+    *Context
+      상위 컴포넌트와 하위 컴포넌트 간의 구체적인 전달 방법 없이 어플리케이션 레벨에서 데이터를 손쉽게 공유하는 방법(API)
+      context api는 여전히 '플럭스' 안에 있고 리액트의 미래 릴리즈 버전에서 변경 될 수 있다.
+      그러므로 context 사용을 피해야 한다.
+
+
+    어플리케이션의 모든 컴포넌트들을 context 프로퍼티를 통해 접근 할 수 있고 리액트 라우터를 접근하기 위해
+    static contextTypes 객체를 생성했다.
+    import PropTypes from 'prop-types';
+
+    class RegisterPost extends Component {
+        static contextTypes = {
+            router: PropTypes.object
+        };
+    ...
+
+
+
+챕터6 - 보너스(랠리코딩)
+
+    리액트 & 리덕트 앱 작동 사이클
+    - 유저가 이벤트 발생
+    - 액션 생성자에게 전달 => 액션 객체 생성
+    - 미들웨어가 액션 가로챔 , 전처리 작업 후 리듀서에게 전달
+    - 리듀서에서 스테이트 작업: 새로운 스테이트 생성 후 리턴
+    - 리액트 에게 상태 전달.
+    - 리액트 리렌더링.
+    ==> 리액트 앱의 일련의 프로세스틑 "동기적(Sync)" 으로 작동함
+
+     *디스패치 :  미들웨어, 리듀서, 스테이트를 묶어서 디스페치 영역(레이어) 라고 한다.
+
+ 1. 리덕스 Thunk
+     비동기 적으로 액션 생성자를 다룬다?
+
+
+ 2. 리덕스 다이나믹 폼
+
+ 3. 리액트 리덕스 에러처리
+
+ 4. 앱 모달
+
+ 5. 브라우저 히스토리
+
+ 6. 앱 배포
+
+
+

@@ -26,14 +26,17 @@
     "google-map-react": "^1.1.5",
     "iso-3166-1": "^1.1.0",
     "lodash": "^4.17.13",
+    "prop-types": "^15.7.2",
     "react": "16.3.2",
     "react-dom": "16.3.2",
     "react-google-maps": "^4.7.1",
     "react-redux": "5.0.7",
+    "react-router": "^3.2.0",
     "react-sparklines": "^1.7.0",
+    "reactstrap": "^8.2.0",
     "redux": "4.0.0",
+    "redux-form": "^6.6.3",
     "redux-promise": "^0.6.0",
-    "youtube-api-search": "0.0.5",
-    "youtube-search": "^1.1.4"
+    "youtube-api-search": "0.0.5"
   }
 }
